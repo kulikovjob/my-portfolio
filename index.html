@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Портфоліо — Вадим</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <div class="avatar">&#128100;</div>
+    <!-- ВАШІ ДАНІ: замініть на свої -->
+    <h1>Куликов Вадим Володимирович</h1>
+    <p class="subtitle">Магістрант | Комп'ютерна інженерія</p>
+    <span class="badge">Azure Static Web Apps</span>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Про мене</h2>
+      <!-- ВАШІ ДАНІ: напишіть 2-3 речення про себе -->
+      <p>Магістрант 1-го курсу спеціальності «Комп'ютерна інженерія».
+         Цікавлюсь хмарними технологіями, IoT та розробкою програмного забезпечення.</p>
+    </section>
+
+    <section class="card">
+      <h2>Навички</h2>
+      <div class="skills">
+        <!-- ВАШІ ДАНІ: додайте або змініть навички -->
+        <span class="skill">Python</span>
+        <span class="skill">Microsoft Azure</span>
+        <span class="skill">GitHub</span>
+        <span class="skill">Linux</span>
+        <span class="skill">SQL</span>
+        <span class="skill">REST API</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Лабораторні роботи з ВК3</h2>
+      <ul class="labs">
+        <li class="done">Лаб. № 1 — Azure IaaS: Virtual Machine + Flask ToDo App</li>
+        <li class="in_work">Лаб. № 2 — Azure PaaS: Static Web Apps + CI/CD (ця робота)</li>
+    </section>
+
+    <section class="card" id="api-section">
+      <h2>Інформація про студента (Azure Functions API)</h2>
+      <p class="api-hint">Дані завантажуються з серверного API та відображаються у зручному вигляді</p>
+      <div id="api-result" class="student-card">
+        <div class="student-loading">⏳ Завантаження даних з API...</div>
+      </div>
+      <div class="api-actions">
+      <button onclick="loadApiData()">Оновити дані з API</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Розгорнуто на Microsoft Azure Static Web Apps | ВК3 Хмарні технології 2026</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
