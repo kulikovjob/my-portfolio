@@ -2,47 +2,44 @@
 
 async function loadApiData() {
   const box = document.getElementById('api-result');
-  box.textContent = 'Завантаження...';
+  if (!box) return;
+
+  box.innerHTML = '<div class="student-loading">⏳ Завантаження даних з API...</div>';
 
   try {
-    // Запит до Azure Functions (папка /api/about)
     const response = await fetch('/api/about');
-
     if (!response.ok) {
       throw new Error('HTTP ' + response.status);
     }
-
     const data = await response.json();
-
-    // Відображаємо дані у вигляді красивої картки
-        renderStudentCard(box, data);
-
+    renderStudentCard(box, data);
   } catch (error) {
-    box.textContent = 'Помилка: ' + error.message;
-    box.style.color = '#e74c3c';
+    box.innerHTML = '<div class="student-loading" style="color: #e53e3e;">❌ Помилка: ' + error.message + '</div>';
   }
 }
 
-// Завантажуємо дані автоматично при відкритті сторінки
-loadApiData();
-
-// Відображає дані з API у вигляді структурованої картки
 function renderStudentCard(container, data) {
   const fields = [
-    { key: 'name',      label: '👤 Name'},
+    { key: 'name',      label: '👤 Ім\'я'},
     { key: 'email',     label: '📧 Email'},
-    { key: 'specialty', label: '🎓 Speciality'},
-    { key: 'labs_done', label: '✅ Labs'},
-    { key: 'platform',  label: '☁️ Platform'},
+    { key: 'specialty', label: '🎓 Спеціальність'},
+    { key: 'labs_done', label: '✅ Лабораторні'},
+    { key: 'platform',  label: '☁️ Платформа'},
   ];
   const skillsHtml = (data.skills || []).map(s => `<span class="api-tag">${s}</span>`).join('');
+
   let html = fields.map(f => `
     <div class="info-row">
       <span class="label">${f.label}</span>
-      <span class="value">${data[f.key]}</span>
-      </div>`).join('');
-  html += `<div class="info-row"><span class="label">💪 Skills</span><div class="skills-tags">${skillsHtml}</div></div>`;
-  html += `<p class="api-timestamp">🕑 Оновлено: ${data.deployed_at}</p>`;
+      <span class="value">${data[f.key] || '-'}</span>
+    </div>`).join('');
+
+  html += `<div class="info-row">
+    <span class="label">💪 Навички</span>
+    <div class="skills-tags">${skillsHtml}</div>
+  </div>`;
+  html += `<p class="api-timestamp">🕑 Оновлено: ${data.deployed_at || '-'}</p>`;
+
   container.innerHTML = html;
 }
 
@@ -80,6 +77,6 @@ async function loadSkills() {
 
 // Викликати при завантаженні сторінки
 document.addEventListener('DOMContentLoaded', () => {
-  loadApiData();  // існуюча функція
-  loadSkills();   // нова функція
+  loadApiData();
+  loadSkills();
 });
