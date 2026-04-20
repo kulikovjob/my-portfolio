@@ -45,3 +45,41 @@ function renderStudentCard(container, data) {
   html += `<p class="api-timestamp">🕑 Оновлено: ${data.deployed_at}</p>`;
   container.innerHTML = html;
 }
+
+// Завантаження навичок з /api/skills з progress bars
+async function loadSkills() {
+  const container = document.getElementById('skills-container');
+  if (!container) return;
+
+  try {
+    const response = await fetch('/api/skills');
+    const skills = await response.json();
+
+    if (!Array.isArray(skills)) throw new Error('Невірний формат даних');
+
+    let html = '';
+    for (const skill of skills) {
+      html += `
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">${skill.name}</span>
+            <span class="skill-percent">${skill.level}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${skill.level}%;"></div>
+          </div>
+        </div>
+      `;
+    }
+    container.innerHTML = html;
+  } catch (error) {
+    container.innerHTML = '<div class="skills-loading" style="color: #e53e3e;">❌ Помилка завантаження навичок</div>';
+    console.error('Error loading skills:', error);
+  }
+}
+
+// Викликати при завантаженні сторінки
+document.addEventListener('DOMContentLoaded', () => {
+  loadApiData();  // існуюча функція
+  loadSkills();   // нова функція
+});

@@ -93,3 +93,46 @@ footer {
   color: #a0aec0;
   font-size: 0.85em;
 }
+
+/* Progress Bar Styles */
+.skill-item {
+  margin-bottom: 16px;
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.9em;
+}
+
+.skill-name {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.skill-percent {
+  color: #0078D4;
+}
+
+.progress-bar {
+  background: #e2e8f0;
+  border-radius: 10px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #107C10, #54B054);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+.skills-loading {
+  color: #718096;
+  font-size: 0.9em;
+  padding: 20px 0;
+  text-align: center;
+}
