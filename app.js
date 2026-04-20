@@ -1,5 +1,17 @@
 // app.js — отримує дані про студента з Azure Functions API
 
+// ========== ТЕМНА ТЕМА ==========
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+
+// Перевірка збереженої теми при завантаженні
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+}
+
+// ========== API ЗАВАНТАЖЕННЯ ==========
 async function loadApiData() {
   const box = document.getElementById('api-result');
   if (!box) return;
@@ -43,7 +55,6 @@ function renderStudentCard(container, data) {
   container.innerHTML = html;
 }
 
-// Завантаження навичок з /api/skills з progress bars
 async function loadSkills() {
   const container = document.getElementById('skills-container');
   if (!container) return;
@@ -75,7 +86,7 @@ async function loadSkills() {
   }
 }
 
-// Викликати при завантаженні сторінки
+// ========== ІНІЦІАЛІЗАЦІЯ ==========
 document.addEventListener('DOMContentLoaded', () => {
   loadApiData();
   loadSkills();

@@ -136,3 +136,62 @@ footer {
   padding: 20px 0;
   text-align: center;
 }
+
+/* Темна тема */
+body.dark {
+  background: #1a202c;
+  color: #e2e8f0;
+}
+
+body.dark .card {
+  background: #2d3748;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+body.dark .card h2 {
+  color: #63b3ed;
+}
+
+body.dark .skill {
+  background: #4a5568;
+  color: #bee3f8;
+}
+
+body.dark .info-row {
+  background: #2d3748;
+}
+
+body.dark .label {
+  color: #a0aec0;
+}
+
+body.dark .value {
+  color: #e2e8f0;
+}
+
+body.dark .api-tag {
+  background: #4a5568;
+  color: #bee3f8;
+}
+
+body.dark button {
+  background: #4a5568;
+  color: white;
+}
+
+body.dark button:hover {
+  background: #2d3748;
+}
+
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0078D4;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2em;
+  padding: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
