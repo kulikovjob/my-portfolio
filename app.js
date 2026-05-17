@@ -91,3 +91,108 @@ document.addEventListener('DOMContentLoaded', () => {
   loadApiData();
   loadSkills();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const feedbackForm = document.getElementById('feedbackForm');
+
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const course = document.getElementById('course').value.trim();
+      const author = document.getElementById('author').value.trim() || 'Анонімно';
+      const text = document.getElementById('feedbackText').value.trim();
+
+      if (!text || !course) {
+        alert('Заповніть назву курсу та текст відгуку.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            text: text,
+            course: course,
+            author: author
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Помилка при відправленні відгуку');
+        }
+
+        const result = await response.json();
+
+        showFeedbackResult(result);
+        feedbackForm.reset();
+        loadFeedbackStats();
+
+      } catch (error) {
+        console.error(error);
+        alert('Не вдалося надіслати відгук. Перевірте роботу API.');
+      }
+    });
+  }
+
+  loadFeedbackStats();
+});
+
+function showFeedbackResult(result) {
+  const resultBlock = document.getElementById('feedbackResult');
+
+  document.getElementById('resultSentiment').textContent = result.sentiment || 'невідомо';
+
+  if (result.confidence) {
+    document.getElementById('resultConfidence').textContent =
+      `positive: ${result.confidence.positive}, neutral: ${result.confidence.neutral}, negative: ${result.confidence.negative}`;
+  } else {
+    document.getElementById('resultConfidence').textContent = 'немає даних';
+  }
+
+  if (result.key_phrases && result.key_phrases.length > 0) {
+    document.getElementById('resultPhrases').textContent = result.key_phrases.join(', ');
+  } else {
+    document.getElementById('resultPhrases').textContent = 'ключові фрази не знайдено';
+  }
+
+  resultBlock.classList.remove('hidden');
+}
+
+async function loadFeedbackStats() {
+  try {
+    const response = await fetch('/api/stats');
+
+    if (!response.ok) {
+      throw new Error('Помилка завантаження статистики');
+    }
+
+    const stats = await response.json();
+
+    document.getElementById('totalReviews').textContent = stats.total ?? 0;
+    document.getElementById('positiveReviews').textContent = stats.positive ?? 0;
+    document.getElementById('neutralReviews').textContent = stats.neutral ?? 0;
+    document.getElementById('negativeReviews').textContent = stats.negative ?? 0;
+
+    const topPhrasesList = document.getElementById('topPhrases');
+    topPhrasesList.innerHTML = '';
+
+    if (stats.top_phrases && stats.top_phrases.length > 0) {
+      stats.top_phrases.forEach((phrase) => {
+        const li = document.createElement('li');
+        li.textContent = phrase;
+        topPhrasesList.appendChild(li);
+      });
+    } else {
+      const li = document.createElement('li');
+      li.textContent = 'Ключові фрази поки відсутні';
+      topPhrasesList.appendChild(li);
+    }
+
+  } catch (error) {
+    console.error(error);
+  }
+}

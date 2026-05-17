@@ -64,6 +64,81 @@
       <button onclick="loadApiData()">Оновити дані з API</button>
       </div>
     </section>
+    <section class="feedback-section">
+  <h2>Відгуки студентів</h2>
+  <p class="section-description">
+    У цьому блоці можна залишити відгук про курс. Система автоматично визначить тональність тексту,
+    ключові фрази та оновить статистику.
+  </p>
+
+  <form id="feedbackForm" class="feedback-form">
+    <label for="course">Назва курсу</label>
+    <input
+      type="text"
+      id="course"
+      name="course"
+      placeholder="Наприклад: ВК3 Хмарні технології та сервіси"
+      required
+    >
+
+    <label for="author">Автор</label>
+    <input
+      type="text"
+      id="author"
+      name="author"
+      placeholder="Наприклад: student1 або Анонімно"
+    >
+
+    <label for="feedbackText">Текст відгуку</label>
+    <textarea
+      id="feedbackText"
+      name="feedbackText"
+      rows="5"
+      placeholder="Напишіть відгук про заняття..."
+      required
+    ></textarea>
+
+    <button type="submit">Надіслати відгук</button>
+  </form>
+
+  <div id="feedbackResult" class="feedback-result hidden">
+    <h3>Результат аналізу</h3>
+    <p><strong>Тональність:</strong> <span id="resultSentiment"></span></p>
+    <p><strong>Confidence:</strong> <span id="resultConfidence"></span></p>
+    <p><strong>Ключові фрази:</strong> <span id="resultPhrases"></span></p>
+  </div>
+
+  <div class="stats-block">
+    <h3>Статистика відгуків</h3>
+
+    <div class="stats-cards">
+      <div class="stat-card">
+        <span class="stat-number" id="totalReviews">0</span>
+        <span class="stat-label">Усього</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number" id="positiveReviews">0</span>
+        <span class="stat-label">Позитивні</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number" id="neutralReviews">0</span>
+        <span class="stat-label">Нейтральні</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-number" id="negativeReviews">0</span>
+        <span class="stat-label">Негативні</span>
+      </div>
+    </div>
+
+    <h4>Топ ключових фраз</h4>
+    <ul id="topPhrases" class="phrases-list">
+      <li>Дані ще не завантажено</li>
+    </ul>
+  </div>
+</section>
   </main>
 
   <footer>
